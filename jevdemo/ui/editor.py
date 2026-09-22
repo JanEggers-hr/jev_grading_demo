@@ -1,5 +1,6 @@
 """Formular pro Frage in der Seitenleiste. Die Config lebt in st.session_state["config"];
-config.yaml auf der Platte wird nie beschrieben."""
+config.yaml auf der Platte wird nie beschrieben. Der data_editor für Choice-Optionen erhält
+einen festen Quell-Frame, sodass Streamlits Edit-Delta auf derselben Basis bei jedem Rerun angewendet wird."""
 
 import pandas as pd
 import streamlit as st
@@ -41,7 +42,7 @@ def _typ_geaendert(name: str) -> None:
     frage.type = st.session_state[_key(name, "type")]
     for feld, wert in _startwerte(frage.type).items():
         setattr(frage, feld, wert)
-    for feld in ("criteria", "skala_min", "skala_max"):
+    for feld in ("criteria", "criteria_quelle", "skala_min", "skala_max"):
         st.session_state.pop(_key(name, feld), None)
 
 
@@ -91,9 +92,14 @@ def _frage_block(frage: cfg.Frage) -> None:
         oben = rechts.number_input("Skala max", value=float(skala[1]), key=_key(name, "skala_max"))
         frage.skala = [_zahl(unten), _zahl(oben)]
     elif frage.type == "choice":
-        criteria = frage.criteria if isinstance(frage.criteria, dict) else {}
-        df = pd.DataFrame({"Option": list(criteria), "Beschreibung": list(criteria.values())}, dtype="string")
-        bearbeitet = st.data_editor(df, num_rows="dynamic", key=_key(name, "criteria"), width="stretch", hide_index=True)
+        quelle_key = _key(name, "criteria_quelle")
+        if quelle_key not in st.session_state:
+            criteria = frage.criteria if isinstance(frage.criteria, dict) else {}
+            st.session_state[quelle_key] = pd.DataFrame(
+                {"Option": list(criteria), "Beschreibung": list(criteria.values())}, dtype="string"
+            )
+        bearbeitet = st.data_editor(st.session_state[quelle_key], num_rows="dynamic", key=_key(name, "criteria"),
+                                    width="stretch", hide_index=True)
         frage.criteria = {
             str(o).strip(): ("" if pd.isna(b) else str(b).strip())
             for o, b in zip(bearbeitet["Option"], bearbeitet["Beschreibung"])
