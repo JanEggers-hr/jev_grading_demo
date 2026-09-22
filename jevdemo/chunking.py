@@ -41,13 +41,35 @@ def _absaetze(pages: list[Seite]) -> list[tuple[str, int]]:
     return out
 
 
+def _wortgruppen(text: str, chunk_tokens: int) -> list[str]:
+    """Harte Teilung an Wortgrenzen für Stücke ohne Satzzeichen."""
+    gruppen: list[str] = []
+    aktuell = ""
+    for wort in text.split():
+        kandidat = f"{aktuell} {wort}".strip()
+        if aktuell and estimate_tokens(kandidat) > chunk_tokens:
+            gruppen.append(aktuell)
+            aktuell = wort
+        else:
+            aktuell = kandidat
+    if aktuell:
+        gruppen.append(aktuell)
+    return gruppen
+
+
 def _stuecke(absatz: str, chunk_tokens: int) -> list[str]:
-    """Absatz, falls zu lang, in Satzgruppen bis chunk_tokens."""
+    """Absatz, falls zu lang, in Satzgruppen bis chunk_tokens; Sätze ohne Satzzeichen an Wortgrenzen."""
     if estimate_tokens(absatz) <= chunk_tokens:
         return [absatz]
     stuecke: list[str] = []
     aktuell = ""
     for satz in (s for s in _SATZENDE.split(absatz) if s):
+        if estimate_tokens(satz) > chunk_tokens:
+            if aktuell:
+                stuecke.append(aktuell)
+                aktuell = ""
+            stuecke.extend(_wortgruppen(satz, chunk_tokens))
+            continue
         kandidat = f"{aktuell} {satz}".strip()
         if aktuell and estimate_tokens(kandidat) > chunk_tokens:
             stuecke.append(aktuell)
@@ -106,6 +128,8 @@ def _seite_bei(pages: list[Seite], position: int) -> int:
 
 def whole_text(pages: list[Seite], max_tokens: int) -> tuple[Einheit, float]:
     """Ganzer Text als eine Einheit; bei Überlänge an Satzgrenze gekürzt. Zweiter Wert: bewerteter Anteil."""
+    if not pages:
+        raise ValueError("whole_text braucht mindestens eine Seite")
     text = "\n\n".join(s.text for s in pages if s.text.strip())
     if estimate_tokens(text) <= max_tokens:
         return Einheit(0, text, pages[0].nummer, pages[-1].nummer, estimate_tokens(text)), 1.0
