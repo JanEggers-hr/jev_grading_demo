@@ -48,14 +48,24 @@ def _katalog() -> list[manifesto.Kategorie]:
     return manifesto.load_catalog()
 
 
-def _plan(seiten, modus: str, chunk_tokens: int, questions: dict, budget: int) -> dict:
+@st.cache_data(show_spinner=False)
+def _chunks(seiten: list[pdf_text.Seite], chunk_tokens: int) -> list[chunking.Einheit]:
+    return chunking.chunk_pages(seiten, chunk_tokens)
+
+
+@st.cache_data(show_spinner=False)
+def _gesamttext(seiten: list[pdf_text.Seite], max_tokens: int) -> tuple[chunking.Einheit, float]:
+    return chunking.whole_text(seiten, max_tokens)
+
+
+def _plan(seiten, chunks: list[chunking.Einheit], modus: str, questions: dict, budget: int) -> dict:
     """Modusname -> (Einheiten, kuerzbar, Anteil)."""
     plan = {}
     if modus in ("Gesamttext", "Beide"):
-        einheit, anteil = chunking.whole_text(seiten, scoring.text_budget(questions, budget))
+        einheit, anteil = _gesamttext(seiten, scoring.text_budget(questions, budget))
         plan["gesamttext"] = ([einheit], True, anteil)
     if modus in ("Chunks", "Beide"):
-        plan["chunks"] = (chunking.chunk_pages(seiten, chunk_tokens), False, 1.0)
+        plan["chunks"] = (chunks, False, 1.0)
     return plan
 
 
@@ -96,14 +106,16 @@ def main() -> None:
     text_gesamt = "\n\n".join(s.text for s in seiten)
     tokens_gesamt = chunking.estimate_tokens(text_gesamt)
     modus = st.radio("Modus", ["Gesamttext", "Chunks", "Beide"], horizontal=True)
-    chunk_tokens = st.slider("Chunk-Größe in Token (geschätzt)", 300, 3000, config.chunk_tokens, 100)
+    chunk_tokens = st.slider("Chunk-Größe in Token (geschätzt)", 300, 3000,
+                             min(3000, max(300, config.chunk_tokens)), 100)
     config.chunk_tokens = chunk_tokens
+    chunks = _chunks(seiten, chunk_tokens)
 
     spalten = st.columns(4)
     spalten[0].metric("Seiten", len(seiten))
     spalten[1].metric("Zeichen", punkt(len(text_gesamt)))
     spalten[2].metric("Token (geschätzt)", punkt(tokens_gesamt))
-    spalten[3].metric("Chunks bei dieser Größe", len(chunking.chunk_pages(seiten, chunk_tokens)))
+    spalten[3].metric("Chunks bei dieser Größe", len(chunks))
     with st.expander("Textvorschau (erste 3.000 Zeichen)"):
         st.text(text_gesamt[:3000])
 
@@ -116,7 +128,7 @@ def main() -> None:
         st.stop()
 
     budget = config.budget_tokens
-    plan = _plan(seiten, modus, chunk_tokens, questions, budget)
+    plan = _plan(seiten, chunks, modus, questions, budget)
     schaetz = [scoring.schaetzung(einheiten, questions, budget) for einheiten, _, _ in plan.values()]
     aufrufe = sum(s["aufrufe"] for s in schaetz)
     tokens = sum(s["input_tokens"] for s in schaetz)
