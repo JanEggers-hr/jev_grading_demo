@@ -71,6 +71,11 @@ def kurz(text: str, n: int = 48) -> str:
     return text if len(text) <= n else text[: n - 1].rstrip() + "…"
 
 
+def punkt(zahl: int) -> str:
+    """Ganze Zahl mit Tausenderpunkt, z. B. 8234 -> '8.234'."""
+    return f"{zahl:,}".replace(",", ".")
+
+
 def kachel(titel: str, text: str, farbe: str, untertitel: str = "") -> None:
     ink = textfarbe(farbe)
     unten = f'<div style="font-size:0.85rem;opacity:0.85">{html.escape(untertitel)}</div>' if untertitel else ""
@@ -119,10 +124,10 @@ def render_meta(ergebnis: dict) -> None:
     for name, lauf in ergebnis["laeufe"].items():
         text = (f"{MODUS_TITEL.get(name, name)}: {lauf['einheiten']} Einheiten, "
                 f"{lauf['anteil_bewertet']:.0%} des Textes, {lauf['aufrufe']} Aufrufe, "
-                f"{lauf['input_tokens']:,} Token, {lauf['kosten_usd']:.4f} USD, {lauf['sekunden']:.1f} s")
+                f"{punkt(lauf['input_tokens'])} Token, {lauf['kosten_usd']:.4f} USD, {lauf['sekunden']:.1f} s")
         if lauf["fehler"]:
             text += f", {len(lauf['fehler'])} Fehler"
-        teile.append(text.replace(",", "."))
+        teile.append(text)
     modell = next((l["modell"] for l in ergebnis["laeufe"].values() if l.get("modell")), ergebnis["meta"]["modell"])
     st.caption(f"Modell {modell} · " + " · ".join(teile))
 

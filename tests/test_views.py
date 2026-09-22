@@ -26,6 +26,12 @@ def test_optionsfarbe_und_kurz():
     assert views.kurz("a" * 60, 10) == "a" * 9 + "…"
 
 
+def test_punkt():
+    assert views.punkt(8234) == "8.234"
+    assert views.punkt(1234567) == "1.234.567"
+    assert views.punkt(12) == "12"
+
+
 def test_balken_figur():
     fig = views.balken(["a", "b"], [10.0, 20.0], views.BLAU, "x")
     assert list(fig.data[0].x) == [10.0, 20.0]
