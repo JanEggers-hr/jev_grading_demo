@@ -26,8 +26,8 @@ def test_zwei_seiten_absaetze_und_silbentrennung():
 
 
 def test_bindestrich_vor_grossbuchstabe_bleibt():
-    data = _pdf(["Nord-\nRhein bleibt getrennt."])
-    assert pdf_text.extract_pages(data)[0].text == "Nord- Rhein bleibt getrennt."
+    data = _pdf(["Nord-\nRhein bleibt getrennt, weil danach ein Großbuchstabe steht."])
+    assert pdf_text.extract_pages(data)[0].text == "Nord- Rhein bleibt getrennt, weil danach ein Großbuchstabe steht."
 
 
 def test_leeres_pdf_wirft_keintext():

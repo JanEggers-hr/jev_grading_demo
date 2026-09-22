@@ -46,6 +46,6 @@ def extract_pages(data: bytes) -> list[Seite]:
             bloecke = [b[4] for b in page.get_text("blocks") if b[6] == 0]
             absaetze = [t for t in (_block_text(b) for b in bloecke) if t]
             seiten.append(Seite(nummer, "\n\n".join(absaetze)))
-    if sum(len(s.text) for s in seiten) == 0:
+    if sum(len(s.text) for s in seiten) < MIN_ZEICHEN:
         raise KeinText("Das PDF enthält keine Textebene (Scan?). OCR wird nicht unterstützt.")
     return seiten
