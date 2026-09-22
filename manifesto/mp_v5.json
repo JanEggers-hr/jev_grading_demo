@@ -1,0 +1,695 @@
+[
+  {
+    "code": "101",
+    "title": "Foreign Special Relationships: Positive",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "1",
+    "domain": "External Relations",
+    "description": "Favourable mentions of particular countries with which the manifesto country has a special relationship; the need for co-operation with and/or aid to such countries."
+  },
+  {
+    "code": "102",
+    "title": "Foreign Special Relationships: Negative",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "1",
+    "domain": "External Relations",
+    "description": "Negative mentions of particular countries with which the manifesto country has a special relationship."
+  },
+  {
+    "code": "103.1",
+    "title": "State Centred Anti-Imperialism",
+    "parent_code": "103",
+    "parent_title": "Anti-Imperialism",
+    "domain_code": "1",
+    "domain": "External Relations",
+    "description": "Negative references to imperial behaviour and/or negative references to one state exerting strong influence (political, military or commercial) over other states. May also include:\n• Negative references to controlling other countries as if they were part of an empire;\n• Favourable references to greater self-government and independence for colonies;\n• Favourable mentions of de-colonisation."
+  },
+  {
+    "code": "103.2",
+    "title": "Foreign Financial Influence",
+    "parent_code": "103",
+    "parent_title": "Anti-Imperialism",
+    "domain_code": "1",
+    "domain": "External Relations",
+    "description": "Negative references and statements against international financial organisations or states using monetary means to assert strong influence over the manifesto or other states. May include:\n• Statements against the World Bank, IMF etc.;\n• Statements against the Washington Consensus;\n• Statements against foreign debt circumscribing state actions."
+  },
+  {
+    "code": "104",
+    "title": "Military: Positive",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "1",
+    "domain": "External Relations",
+    "description": "The importance of external security and defence. May include statements concerning:\n• The need to maintain or increase military expenditure;\n• The need to secure adequate manpower in the military;\n• The need to modernise armed forces and improve military strength;\n• The need for rearmament and self-defence;\n• The need to keep military treaty obligations."
+  },
+  {
+    "code": "105",
+    "title": "Military: Negative",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "1",
+    "domain": "External Relations",
+    "description": "Negative references to the military or use of military power to solve conflicts. References to the ‘evils of war’. May include references to:\n• Decreasing military expenditures;\n• Disarmament;\n• Reduced or abolished conscription."
+  },
+  {
+    "code": "106",
+    "title": "Peace",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "1",
+    "domain": "External Relations",
+    "description": "Any declaration of belief in peace and peaceful means of solving crises -- absent reference to the military. May include:\n• Peace as a general goal;\n• Desirability of countries joining in negotiations with hostile countries;\n• Ending wars in order to establish peace."
+  },
+  {
+    "code": "107",
+    "title": "Internationalism: Positive",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "1",
+    "domain": "External Relations",
+    "description": "Need for international co-operation, including co-operation with specific countries other than those coded in 101. May also include references to the:\n• Need for aid to developing countries;\n• Need for world planning of resources;\n• Support for global governance;\n• Need for international courts;\n• Support for UN or other international organisations."
+  },
+  {
+    "code": "108",
+    "title": "European Community/Union or Latin America Integration: Positive",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "1",
+    "domain": "External Relations",
+    "description": "Favourable mentions of European Community/Union in general. May include the:\n• Desirability of the manifesto country joining (or remaining a member);\n• Desirability of expanding the European Community/Union;\n• Desirability of increasing the ECs/EUs competences;\n• Desirability of expanding the competences of the European Parliament.\nIn Latin American countries: Favourable mentions of integration within Latin America, e.g CELAC, MERCOSUR, UNASUR. May include the:\n• Desirability of the manifesto country joining (or remaining a member);\n• Desirability of expanding or deepening the integration;"
+  },
+  {
+    "code": "109",
+    "title": "Internationalism: Negative",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "1",
+    "domain": "External Relations",
+    "description": "Negative references to international co-operation. Favourable mentions of national independence and sovereignty with regard to the manifesto country’s foreign policy, isolation and/or unilateralism as opposed to internationalism."
+  },
+  {
+    "code": "110",
+    "title": "European Community/Union or Latin America Integration: Negative",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "1",
+    "domain": "External Relations",
+    "description": "Negative references to the European Community/Union. May include:\n• Opposition to specific European policies which are preferred by European authorities;\n• Opposition to the net-contribution of the manifesto country to the EU budget.\nIn Latin American countries: Negative references to integration within Latin America, e.g CELAC, MERCOSUR, UNASUR. May include the:\n• Opposition to the manifesto country joining (or remaining a member);\n• Opposition to expanding or deepening the integration."
+  },
+  {
+    "code": "201.1",
+    "title": "Freedom",
+    "parent_code": "201",
+    "parent_title": "Freedom and Human Rights",
+    "domain_code": "2",
+    "domain": "Freedom and Democracy",
+    "description": "Favourable mentions of importance of personal freedom in the manifesto and other countries. May include mentions of:\n• Freedom from state coercion in the political and economic spheres;\n• Freedom from bureaucratic control;\n• The idea of individualism."
+  },
+  {
+    "code": "201.2",
+    "title": "Human Rights",
+    "parent_code": "201",
+    "parent_title": "Freedom and Human Rights",
+    "domain_code": "2",
+    "domain": "Freedom and Democracy",
+    "description": "Favourable mentions of importance of human and civil rights in the manifesto and other countries, including the right to freedom of speech, press, assembly etc.; children's rights; supportive refugee policies."
+  },
+  {
+    "code": "202.1",
+    "title": "General: Positive",
+    "parent_code": "202",
+    "parent_title": "Democracy",
+    "domain_code": "2",
+    "domain": "Freedom and Democracy",
+    "description": "Favourable mentions of democracy as the “only game in town”. General support for the manifesto country’s democracy. May also include:\n• Support for parts of democratic regimes (rule of law, division of powers, independence of courts etc.);\n• Democracy as method or goal in national, international or other organisations (e.g. labour unions, political parties etc.);\n• The need for the involvement of all citizens in political decision-making."
+  },
+  {
+    "code": "202.2",
+    "title": "General: Negative",
+    "parent_code": "202",
+    "parent_title": "Democracy",
+    "domain_code": "2",
+    "domain": "Freedom and Democracy",
+    "description": "Statements against the idea of democracy, in general or in the manifesto country. Calls for reducing or withholding democratic rights from all or certain groups of people. Calls for the introduction or maintaining of a non-democratic regime, e.g. monarchy or rule of the military."
+  },
+  {
+    "code": "202.3",
+    "title": "Representative Democracy: Positive",
+    "parent_code": "202",
+    "parent_title": "Democracy",
+    "domain_code": "2",
+    "domain": "Freedom and Democracy",
+    "description": "Favourable mentions of the system of representative democracy, in particular in contrast to direct democracy. This includes the protection of representative institutions and actors against direct democratic elements."
+  },
+  {
+    "code": "202.4",
+    "title": "Direct Democracy: Positive",
+    "parent_code": "202",
+    "parent_title": "Democracy",
+    "domain_code": "2",
+    "domain": "Freedom and Democracy",
+    "description": "Favourable mentions of the system of direct democracy, in particular in contrast to representative democracy. This includes the call for the introduction and/or extension of referenda, participatory budgets and other forms of direct democracy."
+  },
+  {
+    "code": "203",
+    "title": "Constitutionalism: Positive",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "2",
+    "domain": "Freedom and Democracy",
+    "description": "Support for maintaining the status quo of the constitution. Support for specific aspects of the manifesto country’s constitution. The use of constitutionalism as an argument for any policy."
+  },
+  {
+    "code": "204",
+    "title": "Constitutionalism: Negative",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "2",
+    "domain": "Freedom and Democracy",
+    "description": "Opposition to the entirety or specific aspects of the manifesto country’s constitution. Calls for constitutional amendments or changes. May include calls to abolish or rewrite the current constitution."
+  },
+  {
+    "code": "301",
+    "title": "Decentralisation: Positive",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "3",
+    "domain": "Political System",
+    "description": "Support for federalism or decentralisation of political and/or economic power. May include:\n• Favourable mentions of the territorial subsidiary principle;\n• More autonomy for any sub-national level in policy making and/or economics, including municipalities;\n• Support for the continuation and importance of local and regional customs and symbols and/or deference to local expertise;\n• Favourable mentions of special consideration for sub-national areas."
+  },
+  {
+    "code": "302",
+    "title": "Centralisation: Positive",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "3",
+    "domain": "Political System",
+    "description": "General opposition to political decision-making at lower political levels. Support for unitary government and for more centralisation in political and administrative procedures."
+  },
+  {
+    "code": "303",
+    "title": "Governmental and Administrative Efficiency",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "3",
+    "domain": "Political System",
+    "description": "Need for efficiency and cost-effectiveness in government and administration and/or the general appeal to make the process of government and administration cheaper and more efficient. May include:\n• Restructuring the civil service;\n• Cutting down on the civil service;\n• Improving bureaucratic procedures;\n• Digitalisation of the civil service.\nNote: Specific policy positions overrule this category! If there is no specific policy position, however, this category applies."
+  },
+  {
+    "code": "304",
+    "title": "Political Corruption",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "3",
+    "domain": "Political System",
+    "description": "Need to eliminate political corruption and associated abuses of political and/or bureaucratic power. Need to abolish clientelist structures and practices."
+  },
+  {
+    "code": "305.1",
+    "title": "Political Authority: Party Competence",
+    "parent_code": "305",
+    "parent_title": "Political Authority",
+    "domain_code": "3",
+    "domain": "Political System",
+    "description": "References to the manifesto party’s competence to govern and/or other party’s lack of such competence."
+  },
+  {
+    "code": "305.2",
+    "title": "Political Authority: Personal Competence",
+    "parent_code": "305",
+    "parent_title": "Political Authority",
+    "domain_code": "3",
+    "domain": "Political System",
+    "description": "Reference to the presidential candidate’s or party leader’s personal competence to govern and/or other candidate’s or leader’s lack of such competence."
+  },
+  {
+    "code": "305.3",
+    "title": "Political Authority: Strong government",
+    "parent_code": "305",
+    "parent_title": "Political Authority",
+    "domain_code": "3",
+    "domain": "Political System",
+    "description": "Favourable mentions of the desirability of a strong and/or stable government in general."
+  },
+  {
+    "code": "305.4",
+    "title": "Pre-Democratic Elites: Positive",
+    "parent_code": "305",
+    "parent_title": "Political Authority",
+    "domain_code": "3",
+    "domain": "Political System",
+    "description": "Co-operation with pre-democratic authorities in the transition period; amnesty for former, non-Democratic elites; and 'let sleeping dogs lie' in dealing with the nomenclature of the former, non-Democratic regime."
+  },
+  {
+    "code": "305.5",
+    "title": "Pre-Democratic Elites: Negative",
+    "parent_code": "305",
+    "parent_title": "Political Authority",
+    "domain_code": "3",
+    "domain": "Political System",
+    "description": "Against pre-democratic elite’s involvement in democratic government; weeding out the collaborators of former, non-Democratic regime from governmental service; for truth commissions and other institutions illuminating recent history."
+  },
+  {
+    "code": "305.6",
+    "title": "Rehabilitation and Compensation",
+    "parent_code": "305",
+    "parent_title": "Political Authority",
+    "domain_code": "3",
+    "domain": "Political System",
+    "description": "References to civic rehabilitation of politically persecuted people in the authoritarian era; references to juridical compensation concerning authoritarian expropriations; moral compensation."
+  },
+  {
+    "code": "401",
+    "title": "Free Market Economy",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "4",
+    "domain": "Economy",
+    "description": "Favourable mentions of the free market and free market capitalism as an economic model. May include favourable references to:\n• Laissez-faire economy;\n• Superiority of individual enterprise over state and control systems;\n• Private property rights;\n• Personal enterprise and initiative;\n• Need for unhampered individual enterprises."
+  },
+  {
+    "code": "402",
+    "title": "Incentives: Positive",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "4",
+    "domain": "Economy",
+    "description": "Favourable mentions of supply side oriented economic policies (assistance to businesses rather than consumers). May include:\n• Financial and other incentives such as subsidies, tax breaks etc.;\n• Wage and tax policies to induce enterprise;\n• Enhancing conditions to start enterprises."
+  },
+  {
+    "code": "403",
+    "title": "Market Regulation",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "4",
+    "domain": "Economy",
+    "description": "Support for policies designed to create a fair and open economic market. May include:\n• Calls for increased consumer protection;\n• Increasing economic competition by preventing monopolies and other actions disrupting the functioning of the market;\n• Defence of small businesses against disruptive powers of big businesses;\n• Social market economy."
+  },
+  {
+    "code": "404",
+    "title": "Economic Planning",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "4",
+    "domain": "Economy",
+    "description": "Favourable mentions of long-standing economic planning by the government (typically but not necessary\nby communist and socialist parties). May be:\n• Policy plans, strategies, policy patterns etc.;\n• Of a consultative or indicative nature."
+  },
+  {
+    "code": "405",
+    "title": "Corporatism/ Mixed Economy",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "4",
+    "domain": "Economy",
+    "description": "Favourable mentions of cooperation of government, employers, and trade unions simultaneously. The collaboration of employers and employee organisations in overall economic planning supervised by the state."
+  },
+  {
+    "code": "406",
+    "title": "Protectionism: Positive",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "4",
+    "domain": "Economy",
+    "description": "Favourable mentions of extending or maintaining the protection of internal markets (by the manifesto or other countries). Measures may include:\n• Tariffs;\n• Quota restrictions;\n• Export subsidies."
+  },
+  {
+    "code": "407",
+    "title": "Protectionism: Negative",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "4",
+    "domain": "Economy",
+    "description": "Support for the concept of free trade and open markets, including free trade agreements. Call for abolishing all means of market protection (in the manifesto or any other country)."
+  },
+  {
+    "code": "408",
+    "title": "Economic Goals",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "4",
+    "domain": "Economy",
+    "description": "Broad and general economic goals that are not mentioned in relation to any other category. General economic statements that fail to include any specific goal."
+  },
+  {
+    "code": "409",
+    "title": "Keynesian Demand Management",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "4",
+    "domain": "Economy",
+    "description": "Favourable mentions of demand side oriented economic policies (assistance to consumers rather than businesses). Particularly includes increase private demand through\n• Increasing public demand;\n• Increasing social expenditures.\nMay also include:\n• Stabilisation in the face of depression;\n• Government stimulus plans in the face of economic crises."
+  },
+  {
+    "code": "410",
+    "title": "Economic Growth: Positive",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "4",
+    "domain": "Economy",
+    "description": "The paradigm of economic growth. Includes:\n• General need to encourage or facilitate greater production;\n• Need for the government to take measures to aid economic growth;\n• Promoting tourism as a growing sector."
+  },
+  {
+    "code": "411",
+    "title": "Technology and Infrastructure: Positive",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "4",
+    "domain": "Economy",
+    "description": "Importance of modernisation of industry and updated methods of transport and communication. May include:\n• Importance of science and technological developments in industry;\n• Need for training, vocational training and research within the economy (This does not imply education in general, see category 506);\n• Calls for public spending on infrastructure such as roads and bridges;\n• Support for public spending on technological infrastructure (e.g.: broadband internet);\n• Calls for building more houses."
+  },
+  {
+    "code": "412",
+    "title": "Controlled Economy",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "4",
+    "domain": "Economy",
+    "description": "Support for direct government control of economy. May include, for instance:\n• Control over prices;\n• Introduction of minimum wages."
+  },
+  {
+    "code": "413",
+    "title": "Nationalisation",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "4",
+    "domain": "Economy",
+    "description": "Favourable mentions of government ownership of industries, either partial or complete; calls for keeping nationalised industries in state hand or nationalising currently private industries. May also include favourable mentions of government ownership of land."
+  },
+  {
+    "code": "414",
+    "title": "Economic Orthodoxy",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "4",
+    "domain": "Economy",
+    "description": "Need for economically healthy government policy making. May include calls for:\n• Reduction of budget deficits;\n• Retrenchment in crisis;\n• Thrift and savings in the face of economic hardship;\n• Support for traditional economic institutions such as stock market and banking system;\n• Support for strong currency."
+  },
+  {
+    "code": "415",
+    "title": "Marxist Analysis: Positive",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "4",
+    "domain": "Economy",
+    "description": "Positive references to Marxist-Leninist ideology and specific use of Marxist-Leninist terminology by the manifesto party (typically but not necessary by communist and socialist parties).\nNote: If unsure about what constitutes Marxist-Leninist ideology in general or terminology in a particular language, please research."
+  },
+  {
+    "code": "416.1",
+    "title": "Anti-Growth Economy: Positive",
+    "parent_code": "416",
+    "parent_title": "Anti-Growth Economy and Sustainability",
+    "domain_code": "4",
+    "domain": "Economy",
+    "description": "Favourable mentions of anti-growth politics. Rejection of the idea that growth is good."
+  },
+  {
+    "code": "416.2",
+    "title": "Sustainability: Positive",
+    "parent_code": "416",
+    "parent_title": "Anti-Growth Economy and Sustainability",
+    "domain_code": "4",
+    "domain": "Economy",
+    "description": "Call for sustainable economic development and green policies in industry. Opposition to growth that causes environmental or societal harm."
+  },
+  {
+    "code": "501",
+    "title": "Environmental Protection",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "5",
+    "domain": "Welfare and Quality of Life",
+    "description": "General policies in favour of protecting the environment, fighting climate change, and other “green” policies. For instance:\n• General preservation of natural resources;\n• Preservation of countryside, forests, etc.;\n• Protection of national parks;\n• Animal rights.\nMay include a great variance of policies that have the unified goal of environmental protection."
+  },
+  {
+    "code": "502",
+    "title": "Culture: Positive",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "5",
+    "domain": "Welfare and Quality of Life",
+    "description": "Need for state funding of cultural and leisure facilities including arts and sport. May include:\n• The need to fund museums, art galleries, libraries etc.;\n• The need to encourage cultural mass media and worthwhile leisure activities, such as public sport clubs."
+  },
+  {
+    "code": "503",
+    "title": "Equality: Positive",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "5",
+    "domain": "Welfare and Quality of Life",
+    "description": "Concept of social justice and the need for fair treatment of all people. This may include:\n• Special protection for underprivileged social groups;\n• Removal of class barriers;\n• Need for fair distribution of resources;\n• The end of discrimination (e.g. racial or sexual discrimination)."
+  },
+  {
+    "code": "504",
+    "title": "Welfare State Expansion",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "5",
+    "domain": "Welfare and Quality of Life",
+    "description": "Favourable mentions of need to introduce, maintain or expand any public social service or social security scheme. This includes, for example, government funding of:\n● Health care; ● Child care;\n● Elder care and pensions; ● Social housing.\nNote: This category excludes education."
+  },
+  {
+    "code": "505",
+    "title": "Welfare State Limitation",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "5",
+    "domain": "Welfare and Quality of Life",
+    "description": "Limiting state expenditures on social services or social security. Favourable mentions of the social subsidiary principle (i.e. private care before state care);"
+  },
+  {
+    "code": "506",
+    "title": "Education Expansion",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "5",
+    "domain": "Welfare and Quality of Life",
+    "description": "Need to expand and/or improve educational provision at all levels.\nNote: This excludes technical training, which is coded under 411."
+  },
+  {
+    "code": "507",
+    "title": "Education Limitation",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "5",
+    "domain": "Welfare and Quality of Life",
+    "description": "Limiting state expenditure on education. May include:\n• The introduction or expansion of study fees at all educational levels;\n• Increasing the number of private schools."
+  },
+  {
+    "code": "601.1",
+    "title": "General",
+    "parent_code": "601",
+    "parent_title": "National Way of Life: Positive",
+    "domain_code": "6",
+    "domain": "Fabric of Society",
+    "description": "Favourable mentions of the manifesto country’s nation, history, and general appeals. May include:\n• Support for established national ideas;\n• General appeals to pride of citizenship;\n• Appeals to patriotism;\n• Appeals to nationalism;\n• Suspension of some freedoms in order to protect the state against subversion."
+  },
+  {
+    "code": "601.2",
+    "title": "Immigration: Negative",
+    "parent_code": "601",
+    "parent_title": "National Way of Life: Positive",
+    "domain_code": "6",
+    "domain": "Fabric of Society",
+    "description": "Statement advocating the restriction of the process of immigration, i.e. accepting new immigrants. Might include statements regarding,\n• Immigration being a threat to national character of the manifesto country,\n• ‘the boat is full’ argument;\n• The introduction of migration quotas, including restricting immigration from specific countries or regions etc.\nOnly concerned with the possibility of new immigrants. For negative statements regarding immigrants already in the manifesto country, please see 608.1."
+  },
+  {
+    "code": "602.1",
+    "title": "General",
+    "parent_code": "602",
+    "parent_title": "National Way of Life: Negative",
+    "domain_code": "6",
+    "domain": "Fabric of Society",
+    "description": "Unfavourable mentions of the manifesto country’s nation and history. May include:\n• Opposition to patriotism;\n• Opposition to nationalism;\n• Opposition to the existing national state, national pride, and national ideas."
+  },
+  {
+    "code": "602.2",
+    "title": "Immigration: Positive",
+    "parent_code": "602",
+    "parent_title": "National Way of Life: Negative",
+    "domain_code": "6",
+    "domain": "Fabric of Society",
+    "description": "Statements favouring new immigrants; against restrictions and quotas; rejection of the ‘boat is full’ argument. Includes allowing new immigrants for the benefit of the manifesto country’s economy.\nOnly concerned with the possibility of new immigrants. For positive statements regarding immigrants already in the manifesto country, please see 607.1."
+  },
+  {
+    "code": "603",
+    "title": "Traditional Morality: Positive",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "6",
+    "domain": "Fabric of Society",
+    "description": "Favourable mentions of traditional and/or religious moral values. May include:\n• Prohibition, censorship and suppression of immorality and unseemly behaviour;\n• Maintenance and stability of the traditional family as a value;\n• Support for the role of religious institutions in state and society."
+  },
+  {
+    "code": "604",
+    "title": "Traditional Morality: Negative",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "6",
+    "domain": "Fabric of Society",
+    "description": "Opposition to traditional and/or religious moral values. May include:\n• Support for divorce, abortion etc.;\n• General support for modern family composition;\n• Calls for the separation of church and state."
+  },
+  {
+    "code": "605.1",
+    "title": "Law and Order General: Positive",
+    "parent_code": "605",
+    "parent_title": "Law and Order",
+    "domain_code": "6",
+    "domain": "Fabric of Society",
+    "description": "Favourable mentions of strict law enforcement, and tougher actions against domestic crime. Only refers to the enforcement of the status quo of the manifesto country’s law code. May include:\n• Increasing support and resources for the police;\n• Tougher attitudes in courts;\n• Importance of internal security;\n• Fight against violence."
+  },
+  {
+    "code": "605.2",
+    "title": "Law and Order General: Negative",
+    "parent_code": "605",
+    "parent_title": "Law and Order",
+    "domain_code": "6",
+    "domain": "Fabric of Society",
+    "description": "Favourable mentions of less law enforcement or rejection of plans for stronger law enforcement. Only refers to the enforcement of the status quo of the manifesto country’s law code. May include:\n• Less resources for police;\n• Reducing penalties;\n• Calls for abolishing the death penalty;\n• Decriminalisation of drugs, prostitution etc."
+  },
+  {
+    "code": "606.1",
+    "title": "General",
+    "parent_code": "606",
+    "parent_title": "Civic Mindedness: Positive",
+    "domain_code": "6",
+    "domain": "Fabric of Society",
+    "description": "General appeals for national solidarity and the need for society to see itself as united. Calls for solidarity with and help for fellow people, familiar and unfamiliar. May include:\n• Favourable mention of the civil society and volunteering;\n• Decrying anti-social attitudes in times of crisis;\n• Appeal for public spiritedness;\n• Support for the public interest."
+  },
+  {
+    "code": "606.2",
+    "title": "Bottom-Up Activism",
+    "parent_code": "606",
+    "parent_title": "Civic Mindedness: Positive",
+    "domain_code": "6",
+    "domain": "Fabric of Society",
+    "description": "Appeals to grassroots movements of social change; banding all sections of society together to overcome common adversity and hardship; appeals to the people as a united actor."
+  },
+  {
+    "code": "607.1",
+    "title": "General",
+    "parent_code": "607",
+    "parent_title": "Multiculturalism: Positive",
+    "domain_code": "6",
+    "domain": "Fabric of Society",
+    "description": "Favourable mentions of cultural diversity and cultural plurality within domestic societies. May include the preservation of autonomy of religious, linguistic heritages within the country including special educational provisions."
+  },
+  {
+    "code": "607.2",
+    "title": "Immigrant Integration: Diversity",
+    "parent_code": "607",
+    "parent_title": "Multiculturalism: Positive",
+    "domain_code": "6",
+    "domain": "Fabric of Society",
+    "description": "Statements favouring the idea that immigrants keep their cultural traits; voluntary integration; state providing opportunities to integrate.\nOnly concerned with immigrants already in the manifesto country. For positive statements regarding the possibility of new immigrants, please see 602.2"
+  },
+  {
+    "code": "607.3",
+    "title": "Indigenous rights: Positive",
+    "parent_code": "607",
+    "parent_title": "Multiculturalism: Positive",
+    "domain_code": "6",
+    "domain": "Fabric of Society",
+    "description": "Calls for the protection of indigenous people, strengthening their rights, may include:\n• Protection of their lands;\n• Introduction of special provisions in the democratic or bureaucratic process;\n• Compensation for past grief."
+  },
+  {
+    "code": "608.1",
+    "title": "General",
+    "parent_code": "608",
+    "parent_title": "Multiculturalism: Negative",
+    "domain_code": "6",
+    "domain": "Fabric of Society",
+    "description": "The enforcement or encouragement of cultural integration. Appeals for cultural homogeneity in society."
+  },
+  {
+    "code": "608.2",
+    "title": "Immigrant Integration: Assimilation",
+    "parent_code": "608",
+    "parent_title": "Multiculturalism: Negative",
+    "domain_code": "6",
+    "domain": "Fabric of Society",
+    "description": "Calls for immigrants that are in the country to adopt the manifesto country’s culture and fully assimilate. Reinforce integration.\nOnly concerned with immigrants already in the manifesto country. For negative statements regarding the possibility of new immigrants, please see 601.2"
+  },
+  {
+    "code": "608.3",
+    "title": "Indigenous rights: Negative",
+    "parent_code": "608",
+    "parent_title": "Multiculturalism: Negative",
+    "domain_code": "6",
+    "domain": "Fabric of Society",
+    "description": "Rejection of idea of special protection for indigenous people."
+  },
+  {
+    "code": "701",
+    "title": "Labour Groups: Positive",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "7",
+    "domain": "Social Groups",
+    "description": "Favourable references to all labour groups, the working class, and unemployed workers in general. Support for trade unions and calls for the good treatment of all employees, including:\n• More jobs; ● Good working conditions;\n• Fair wages; ● Company pensions etc."
+  },
+  {
+    "code": "702",
+    "title": "Labour Groups: Negative",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "7",
+    "domain": "Social Groups",
+    "description": "Negative references to labour groups and trade unions. May focus specifically on the danger of unions ‘abusing power’."
+  },
+  {
+    "code": "703.1",
+    "title": "Agriculture and Farmers: Positive",
+    "parent_code": "703",
+    "parent_title": "Agriculture and Farmers",
+    "domain_code": "7",
+    "domain": "Social Groups",
+    "description": "Specific policies in favour of agriculture and farmers. Includes all types of agriculture, farming practises and primary industries. Only statements that have agriculture as the key goal should be included in this category."
+  },
+  {
+    "code": "703.2",
+    "title": "Agriculture and Farmers: Negative",
+    "parent_code": "703",
+    "parent_title": "Agriculture and Farmers",
+    "domain_code": "7",
+    "domain": "Social Groups",
+    "description": "Rejection of policies favouring agriculture and farmers. May include:\n• Cap or abolish subsidies;\n• Reject special welfare provisions for farmers."
+  },
+  {
+    "code": "704",
+    "title": "Middle Class and Professional Groups",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "7",
+    "domain": "Social Groups",
+    "description": "General favourable references to the middle class. Specifically, statements may include references to:\n• Professional groups, (e.g.: doctors or lawyers);\n• White collar groups, (e.g.: bankers or office employees),\n• Service sector groups (e.g.: IT industry employees);\n• Old and/or new middle class.\nNote: This is not an economical category but refers to the social group(s)."
+  },
+  {
+    "code": "705",
+    "title": "Underprivileged Minority Groups",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "7",
+    "domain": "Social Groups",
+    "description": "Very general favourable references to underprivileged minorities who are defined neither in economic nor in demographic terms (e.g. the handicapped, homosexuals, immigrants, indigenous). Only includes favourable statements that cannot be classified in other categories (e.g. 503, 504, 604, 607 etc.)"
+  },
+  {
+    "code": "706",
+    "title": "Non-economic Demographic Groups",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "7",
+    "domain": "Social Groups",
+    "description": "General favourable mentions of demographically defined special interest groups of all kinds. They may include:\n• Women;\n• University students;\n• Old, young, or middle aged people.\nMight include references to assistance to these groups, but only if these do not fall under other categories (e.g. 503 or 504)."
+  },
+  {
+    "code": "000",
+    "title": "No meaningful category applies",
+    "parent_code": null,
+    "parent_title": null,
+    "domain_code": "0",
+    "domain": "No category",
+    "description": "Statements not covered by other categories; sentences devoid of any meaning."
+  }
+]
