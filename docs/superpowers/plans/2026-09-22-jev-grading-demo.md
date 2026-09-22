@@ -1402,7 +1402,7 @@ class JevClient:
         headers = {
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json",
-            "HTTP-Referer": "https://interaktive-projekte.de/jev_grading_demo/",
+            "HTTP-Referer": "https://woistderbus.interaktive-projekte.de/jev_grading_demo/",
             "X-Title": "jev_grading_demo",
         }
         for versuch in range(self.retries + 1):
@@ -3119,7 +3119,7 @@ Expected: `ok`. (Das Caddy-Image hat `wget`; fehlt es, stattdessen `sudo docker 
 
 **Interfaces:**
 - Consumes: gesunder Container aus Task 15.
-- Produces: `https://interaktive-projekte.de/jev_grading_demo/` liefert die App.
+- Produces: `https://woistderbus.interaktive-projekte.de/jev_grading_demo/` liefert die App.
 
 Die Caddyfile gehört zur laufenden Weihnachtswunder-Produktion. Reihenfolge: lesen, Backup, additiv einfügen, validieren, erst dann reload. Jeder sudo-Block einzeln freigeben.
 
@@ -3168,9 +3168,9 @@ Expected: `Valid configuration` und ein Reload ohne Fehler. Schlägt `validate` 
 - [ ] **Step 4: Öffentlich prüfen (kein sudo)**
 
 ```bash
-curl -s https://interaktive-projekte.de/jev_grading_demo/_stcore/health; echo
-curl -s -o /dev/null -w "%{http_code}\n" https://interaktive-projekte.de/jev_grading_demo/
-curl -s -o /dev/null -w "%{http_code}\n" https://interaktive-projekte.de/
+curl -s https://woistderbus.interaktive-projekte.de/jev_grading_demo/_stcore/health; echo
+curl -s -o /dev/null -w "%{http_code}\n" https://woistderbus.interaktive-projekte.de/jev_grading_demo/
+curl -s -o /dev/null -w "%{http_code}\n" https://woistderbus.interaktive-projekte.de/
 ```
 Expected: `ok`, `200`, `200` (die GPS-Tracker-Seite antwortet weiter).
 
@@ -3187,7 +3187,7 @@ ssh jeggers@34.159.146.213 'cat >> /var/opt/README.md' <<'MDEOF'
 - Pfad: /home/jeggers/projects/jev_grading_demo (compose-Projekt, Container `jev_grading_demo`, Port 8501 intern).
 - Netz: hängt am `weihnachtswunder-gps-tracker_default`, Route in der Caddyfile des GPS-Trackers:
   `@jev path /jev_grading_demo /jev_grading_demo/*` -> `reverse_proxy jev_grading_demo:8501`.
-- URL: https://interaktive-projekte.de/jev_grading_demo/
+- URL: https://woistderbus.interaktive-projekte.de/jev_grading_demo/
 - Secrets: `.env` im Projektpfad (OPENROUTER_API_KEY, APP_PASSWORD), nur für jeggers lesbar.
 - Update: rsync ins Projektverzeichnis, dann `sudo docker compose build && sudo docker compose up -d`.
 - Ansprechpartner: Jan Eggers.

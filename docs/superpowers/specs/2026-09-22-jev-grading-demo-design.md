@@ -15,7 +15,7 @@ Text) und Chunks (Text in Stücke geteilt, Ergebnisse token-gewichtet gemittelt)
 
 Zielgruppe: Kolleginnen und Kollegen bei WDR, die einen Link und ein gemeinsames Passwort
 bekommen. Deployment als Container auf dem Weihnachtswunderserver unter
-`https://interaktive-projekte.de/jev_grading_demo/`.
+`https://woistderbus.interaktive-projekte.de/jev_grading_demo/`.
 
 Vorlage für Muster und Code: das Referenzprojekt `~/Code/jev_grading_test` (Leiter-Umrechnung,
 Retry-Logik, Manifesto-Fragenbauer). Es wird nicht importiert, sondern als Vorbild gelesen.
@@ -504,7 +504,7 @@ Reihenfolge, jeder sudo-Block einzeln freigegeben:
    ```
    `caddy validate`, dann `caddy reload` im Caddy-Container. Kein Pfad-Strip: Streamlit erwartet
    den vollen Pfad wegen `baseUrlPath`.
-4. Browser-Test unter `https://interaktive-projekte.de/jev_grading_demo/`, inklusive WebSocket
+4. Browser-Test unter `https://woistderbus.interaktive-projekte.de/jev_grading_demo/`, inklusive WebSocket
    (die Seite muss interaktiv bleiben, nicht nur laden).
 5. Eintrag in `/var/opt/README.md` (Projekt, Pfad, Port, Route, Ansprechpartner).
 
