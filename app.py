@@ -73,7 +73,11 @@ def main() -> None:
     _gate()
     katalog = _katalog()
     if "config" not in st.session_state:
-        st.session_state["config"] = cfg.load()
+        try:
+            st.session_state["config"] = cfg.load()
+        except cfg.ConfigError as e:
+            st.error(f"config.yaml lässt sich nicht laden: {e}")
+            st.stop()
     with st.sidebar:
         config = render_editor(st.session_state["config"], katalog)
         fehler = cfg.validate(config)
@@ -85,6 +89,7 @@ def main() -> None:
     datei = st.file_uploader("PDF hierher ziehen oder auswählen", type=["pdf"])
     if datei is None:
         st.session_state.pop("ergebnis", None)
+        st.session_state.pop("ergebnis_json", None)
         st.session_state.pop("datei_sha", None)
         st.info("Noch kein PDF.")
         st.stop()
@@ -94,6 +99,7 @@ def main() -> None:
     if st.session_state.get("datei_sha") != sha:
         st.session_state["datei_sha"] = sha
         st.session_state.pop("ergebnis", None)
+        st.session_state.pop("ergebnis_json", None)
     try:
         seiten = _seiten(data)
     except pdf_text.KeinText as e:
@@ -158,6 +164,7 @@ def main() -> None:
             laeufe[name] = (lauf, scoring.aggregate(lauf, config, katalog))
         meta = results.meta(datei.name, data, seiten, config.model)
         st.session_state["ergebnis"] = results.build(meta, config, laeufe)
+        st.session_state["ergebnis_json"] = results.to_json(st.session_state["ergebnis"])
 
     ergebnis = st.session_state.get("ergebnis")
     if not ergebnis:
@@ -167,10 +174,10 @@ def main() -> None:
         st.error(f"Kein Aufruf erfolgreich. Erste Ursache: {erste}")
         st.stop()
     render_meta(ergebnis)
-    render_results(ergebnis, config)
+    render_results(ergebnis, cfg.from_dict(ergebnis["config"]))
     stamm = Path(datei.name).stem
     links, rechts = st.columns(2)
-    links.download_button("Ergebnis als JSON", results.to_json(ergebnis), file_name=f"{stamm}_jev.json",
+    links.download_button("Ergebnis als JSON", st.session_state["ergebnis_json"], file_name=f"{stamm}_jev.json",
                           mime="application/json")
     rechts.download_button("Extrahierter Text als TXT", text_gesamt, file_name=f"{stamm}.txt", mime="text/plain")
 

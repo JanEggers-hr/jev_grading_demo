@@ -212,3 +212,18 @@ def test_aggregate_manifesto_anteile_und_kennzahlen():
     assert m["top"][0] == ("104", "Military: Positive", 100.0)
     assert m["kennzahlen"] == {"rile": 100.0, "intpeace": 0.0}
     assert m["confidence"] == 0.75
+
+
+def test_aggregate_vereinigt_optionen_aus_allen_antworten():
+    e1 = EinheitErgebnis(Einheit(0, "a", 1, 1, 100), antworten={
+        "wahl": {"type": "choice", "choice": "A", "probabilities": {"A": 1.0}, "confidence": 1.0}})
+    e2 = EinheitErgebnis(Einheit(1, "b", 1, 1, 100), antworten={
+        "wahl": {"type": "choice", "choice": "B", "probabilities": {"B": 1.0}, "confidence": 1.0}})
+    config = cfg.Config(fragen=[cfg.Frage("wahl", "choice", "?", criteria={"A": "a", "B": "b"})])
+    agg = scoring.aggregate(Lauf(modus="chunks", einheiten=[e1, e2]), config, manifesto.load_catalog())
+    assert agg["wahl"]["probabilities"] == {"A": 0.5, "B": 0.5}
+
+
+def test_text_budget_nie_negativ():
+    gross = {"type": "choice", "instructions": "x" * 20000, "criteria": {"A": "a", "B": "b"}}
+    assert scoring.text_budget({"gross": gross}, 1000) == 0

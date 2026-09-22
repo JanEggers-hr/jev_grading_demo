@@ -44,7 +44,7 @@ class JevClient:
         headers = {
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json",
-            "HTTP-Referer": "https://interaktive-projekte.de/jev_grading_demo/",
+            "HTTP-Referer": "https://woistderbus.interaktive-projekte.de/jev_grading_demo/",
             "X-Title": "jev_grading_demo",
         }
         for versuch in range(self.retries + 1):

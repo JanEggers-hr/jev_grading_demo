@@ -105,3 +105,8 @@ def test_from_dict_ohne_fragen_wirft():
         cfg.from_dict({"model": "x"})
     with pytest.raises(cfg.ConfigError):
         cfg.loads("fragen:\n  a: [1, 2]\n")
+
+
+def test_unbekanntes_feld_wirft_configerror():
+    with pytest.raises(cfg.ConfigError):
+        cfg.loads("fragen:\n  a:\n    type: noul\n    instructions: x\n    unbekannt: 1\n")

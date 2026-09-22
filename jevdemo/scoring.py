@@ -45,9 +45,9 @@ def pack_questions(unit_tokens: int, questions: dict[str, dict], budget: int) ->
 
 
 def text_budget(questions: dict[str, dict], budget: int) -> int:
-    """So viele Token darf der Gesamttext haben, damit auch die größte Frage noch passt."""
+    """So viele Token darf der Gesamttext haben, damit auch die größte Frage noch passt; nie negativ."""
     groesste = max((question_tokens(q) for q in questions.values()), default=0)
-    return budget - groesste - RESERVE
+    return max(0, budget - groesste - RESERVE)
 
 
 @dataclass
@@ -154,7 +154,8 @@ def _bewerte_parallel(lauf: Lauf, questions, client, text_typ, budget, workers, 
     jobs = [(erg, gruppe) for erg in lauf.einheiten
             for gruppe in pack_questions(erg.einheit.tokens, questions, budget)]
     erledigt = 0
-    with ThreadPoolExecutor(max_workers=workers) as pool:
+    pool = ThreadPoolExecutor(max_workers=workers)
+    try:
         futures = {pool.submit(client.decide, _state(text_typ, erg.einheit.text), gruppe): (erg, gruppe)
                    for erg, gruppe in jobs}
         for future in as_completed(futures):
@@ -169,6 +170,8 @@ def _bewerte_parallel(lauf: Lauf, questions, client, text_typ, budget, workers, 
             erledigt += 1
             if progress:
                 progress(erledigt, len(jobs))
+    finally:
+        pool.shutdown(wait=True, cancel_futures=True)
 
 
 def _gewichtet(gewichte: list[float], werte: list[float]) -> float:
@@ -203,7 +206,7 @@ def aggregate(lauf: Lauf, config: Config, katalog: list[manifesto.Kategorie]) ->
             out[frage.name] = {"type": "score", "wert": round(wert, 2), "stufe": round(stufe, 3),
                                "probabilities": probs, "confidence": confidence, "n": n}
         else:  # choice und manifesto
-            optionen = list(antworten[0]["probabilities"])
+            optionen = list(dict.fromkeys(o for a in antworten for o in a["probabilities"]))
             probs = {o: round(_gewichtet(gewichte, [a["probabilities"].get(o, 0.0) for a in antworten]), 4)
                      for o in optionen}
             zaehler = Counter(a["choice"] for a in antworten)

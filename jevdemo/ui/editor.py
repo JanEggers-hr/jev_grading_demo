@@ -68,8 +68,11 @@ def _hinzufuegen() -> None:
 
 
 def _reset() -> None:
-    st.session_state["config"] = cfg.load()
     _widget_keys_loeschen()
+    try:
+        st.session_state["config"] = cfg.load()
+    except cfg.ConfigError as e:
+        st.session_state["cfg__fehler"] = f"config.yaml lässt sich nicht laden: {e}"
 
 
 def _zahl(x: float) -> float | int:
@@ -83,10 +86,13 @@ def _frage_block(frage: cfg.Frage) -> None:
                  on_change=_typ_geaendert, args=(name,))
     frage.instructions = st.text_area("Instruction", value=frage.instructions, key=_key(name, "instructions"), height=100)
     if frage.type == "score":
+        stufen_alt = frage.criteria if isinstance(frage.criteria, list) else []
         stufen = st.text_area("Stufen, eine je Zeile, von niedrig nach hoch",
-                              value="\n".join(frage.criteria or []), key=_key(name, "criteria"), height=160)
+                              value="\n".join(str(s) for s in stufen_alt), key=_key(name, "criteria"), height=160)
         frage.criteria = [z.strip() for z in stufen.splitlines() if z.strip()]
-        skala = frage.skala or [1, 5]
+        skala = list(frage.skala or [])[:2]
+        if len(skala) != 2 or not all(isinstance(x, (int, float)) for x in skala):
+            skala = [1, 5]
         links, rechts = st.columns(2)
         unten = links.number_input("Skala min", value=float(skala[0]), key=_key(name, "skala_min"))
         oben = rechts.number_input("Skala max", value=float(skala[1]), key=_key(name, "skala_max"))
@@ -124,6 +130,8 @@ def _manifesto_block(frage: cfg.Frage, katalog: list[manifesto.Kategorie]) -> No
 
 def render_editor(config: cfg.Config, katalog: list[manifesto.Kategorie]) -> cfg.Config:
     st.header("Fragen")
+    if st.session_state.get("cfg__fehler"):
+        st.error(st.session_state["cfg__fehler"])
     st.caption(f"Modell: {config.model}")
     config.text_typ = st.text_area("Texttyp (Kontext, geht als text_type an Jev)", value=config.text_typ,
                                    key="cfg__text_typ", height=68)
@@ -131,8 +139,11 @@ def render_editor(config: cfg.Config, katalog: list[manifesto.Kategorie]) -> cfg
         with st.expander(f"{frage.name} ({frage.type})", expanded=False):
             if frage.type == "manifesto":
                 _manifesto_block(frage, katalog)
-            else:
+            elif frage.type in TYPEN:
                 _frage_block(frage)
+            else:
+                st.error(f"Unbekannter Typ '{frage.type}'. In config.yaml korrigieren oder Frage löschen.")
+                st.button("Frage löschen", key=_key(frage.name, "loeschen"), on_click=_loeschen, args=(frage.name,))
     st.divider()
     st.subheader("Frage hinzufügen")
     st.text_input("Name (a-z, 0-9, _)", key="neu__name")
