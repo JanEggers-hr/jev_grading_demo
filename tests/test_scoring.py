@@ -138,3 +138,12 @@ def test_run_kuerzbar_mit_zwei_gruppen():
 def test_run_kuerzbar_verlangt_genau_eine_einheit():
     with pytest.raises(ValueError):
         scoring.run(_einheiten(10, 10), FRAGEN, FakeClient(), text_typ="", budget=1000, modus="x", kuerzbar=True)
+
+
+def test_run_kuerzbar_sammelt_beliebige_fehler():
+    client = FakeClient([RuntimeError("kaputte Antwort")])
+    lauf = scoring.run(_einheiten(350), FRAGEN, client, text_typ="t", budget=26000, modus="gesamttext",
+                       kuerzbar=True)
+    assert lauf.einheiten[0].antworten == {}
+    assert len(lauf.fehler) == 1 and "kaputte Antwort" in lauf.fehler[0]
+    assert lauf.einheiten[0].fehler == ["kaputte Antwort"]

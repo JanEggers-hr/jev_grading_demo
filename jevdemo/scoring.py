@@ -116,7 +116,7 @@ def run(units: list[Einheit], questions: dict[str, dict], client, *, text_typ: s
 
 
 def _bewerte_kuerzbar(lauf: Lauf, questions, client, text_typ, budget, progress) -> None:
-    """Gesamttext: Gruppen nacheinander. Bei ZuLang kürzen und alle Gruppen neu, damit jede Antwort denselben Text meint."""
+    """Gesamttext: Gruppen nacheinander. Bei ZuLang kürzen und alle Gruppen neu, damit jede Antwort denselben Text meint. Beliebige Fehler werden gesammelt."""
     erg = lauf.einheiten[0]
     anteil_start, laenge_start = lauf.anteil_bewertet, len(erg.einheit.text)
     for kuerzung in range(MAX_KUERZUNGEN + 1):
@@ -140,7 +140,7 @@ def _bewerte_kuerzbar(lauf: Lauf, questions, client, text_typ, budget, progress)
             erg.einheit = shrink(erg.einheit, KUERZUNG)
             lauf.anteil_bewertet = round(anteil_start * len(erg.einheit.text) / laenge_start, 3)
             continue
-        except JevFehler as e:
+        except Exception as e:
             erg.fehler.append(str(e))
             lauf.fehler.append(f"Einheit 0 ({namen}): {e}")
             erg.antworten = antworten
