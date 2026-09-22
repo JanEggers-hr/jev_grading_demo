@@ -142,6 +142,8 @@ Funktionen:
   - manifesto: höchstens eine Frage dieses Typs; `domains` Teilmenge von "1".."7", nicht leer;
     `kennzahlen` Teilmenge der bekannten Kennzahlen.
   - `chunk_tokens` 300..3000 (gleicher Bereich wie der Slider), `budget_tokens` 1000..28000.
+    Hinweis: Liegt `budget_tokens` unter der größten Frage (Manifesto-Block ≈ 6.600 Token) plus Reserve,
+    kürzt der Gesamttext-Modus auf 0 Token; `text_budget` wird deshalb auf mindestens 0 begrenzt.
 - `to_questions(config, katalog) -> dict[str, dict]`: nur aktive Fragen; noul/choice/score
   1:1 ins Jev-Format (`type`, `instructions`, `criteria`); manifesto über `manifesto.build_question()`.
 - `to_dict(config)`, `from_dict(d)`, `to_yaml(config) -> str`: für Editor-State, Download und das Ergebnis-JSON.
@@ -301,8 +303,11 @@ JSON-Form:
 
 - `render_editor(config: Config, katalog) -> Config`: zeichnet das Formular in der Seitenleiste,
   liest die Widgets, gibt die aktuelle Config zurück. Editor-State lebt in `st.session_state["config"]`.
-- `render_results(result: dict, katalog)`: Metazeile, dann je Modus eine Spalte mit den Blöcken in
-  Config-Reihenfolge.
+- `render_results(result: dict, config: Config)`: je Modus eine Spalte mit den Blöcken in
+  Config-Reihenfolge. `config` ist die im Ergebnis eingebettete Config (`from_dict(result["config"])`),
+  nicht die Live-Config der Seitenleiste: das Aggregat gehört zur Config zum Laufzeitpunkt, und ein
+  Typwechsel in der Seitenleiste nach dem Lauf darf die Anzeige alter Ergebnisse nicht brechen.
+  `render_meta(result)` liefert die Metazeile.
 - Farben und Balken folgen dem dataviz-Skill (vor der Implementierung lesen): eine kategoriale
   Palette für Choice-Optionen und Domänen, eine divergierende Skala rot–neutral–grün für noul und rile,
   eine sequenzielle für Score-Stufen.
