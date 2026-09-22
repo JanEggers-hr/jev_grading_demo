@@ -1,0 +1,14 @@
+services:
+  jev_grading_demo:
+    build: .
+    image: jev_grading_demo:latest
+    container_name: jev_grading_demo
+    env_file: .env
+    restart: unless-stopped
+    networks:
+      - caddy
+
+networks:
+  caddy:
+    external: true
+    name: weihnachtswunder-gps-tracker_default
