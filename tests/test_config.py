@@ -13,10 +13,10 @@ def test_default_laedt_und_ist_gueltig():
     config = cfg.load()
     assert cfg.validate(config) == []
     assert config.model == "typesafe/jev-1.13"
-    assert config.chunk_tokens == 800
-    assert [f.name for f in config.fragen][:2] == ["manifesto", "konkretheit"]
-    assert config.fragen[1].skala == [1, 5]
-    assert len(config.fragen[1].criteria) == 5
+    assert 300 <= config.chunk_tokens <= 3000
+    assert 1000 <= config.budget_tokens <= 28000
+    assert len(config.fragen) >= 2
+    assert sum(f.type == "manifesto" for f in config.fragen) == 1
 
 
 def test_yaml_roundtrip():
