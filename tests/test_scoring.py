@@ -147,3 +147,68 @@ def test_run_kuerzbar_sammelt_beliebige_fehler():
     assert lauf.einheiten[0].antworten == {}
     assert len(lauf.fehler) == 1 and "kaputte Antwort" in lauf.fehler[0]
     assert lauf.einheiten[0].fehler == ["kaputte Antwort"]
+
+
+from jevdemo import config as cfg
+from jevdemo import manifesto
+from jevdemo.scoring import EinheitErgebnis, Lauf
+
+
+def _lauf_fuer_aggregation() -> Lauf:
+    e1 = EinheitErgebnis(Einheit(0, "a", 1, 1, 100), antworten={
+        "ja": {"type": "noul", "noul": 0.2},
+        "wahl": {"type": "choice", "choice": "A", "probabilities": {"A": 0.8, "B": 0.2}, "confidence": 0.8},
+        "stufe": {"type": "score", "score": 0.0, "probabilities": {"0": 1.0, "1": 0.0, "2": 0.0}, "confidence": 0.5},
+        "manifesto": {"type": "choice", "choice": "104 Military: Positive",
+                      "probabilities": {"104 Military: Positive": 1.0, "000 No meaningful category applies": 0.0},
+                      "confidence": 0.9},
+    })
+    e2 = EinheitErgebnis(Einheit(1, "b", 1, 1, 300), antworten={
+        "ja": {"type": "noul", "noul": 0.6},
+        "wahl": {"type": "choice", "choice": "B", "probabilities": {"A": 0.2, "B": 0.8}, "confidence": 0.6},
+        "stufe": {"type": "score", "score": 2.0, "probabilities": {"0": 0.0, "1": 0.0, "2": 1.0}, "confidence": 0.7},
+        "manifesto": {"type": "choice", "choice": "104 Military: Positive",
+                      "probabilities": {"104 Military: Positive": 1.0, "000 No meaningful category applies": 0.0},
+                      "confidence": 0.7},
+    })
+    e3 = EinheitErgebnis(Einheit(2, "c", 2, 2, 500), fehler=["HTTP 500: kaputt"])  # keine Antworten
+    return Lauf(modus="chunks", einheiten=[e1, e2, e3])
+
+
+def _config_fuer_aggregation() -> cfg.Config:
+    return cfg.Config(fragen=[
+        cfg.Frage("ja", "noul", "?"),
+        cfg.Frage("wahl", "choice", "?", criteria={"A": "a", "B": "b"}),
+        cfg.Frage("stufe", "score", "?", criteria=["s1", "s2", "s3"], skala=[1, 5]),
+        cfg.Frage("manifesto", "manifesto", "?", domains=["1"], kennzahlen=["rile", "intpeace"]),
+        cfg.Frage("ohne", "noul", "?"),
+        cfg.Frage("inaktiv", "noul", "?", aktiv=False),
+    ])
+
+
+def test_aggregate_gewichtet_nach_tokens():
+    agg = scoring.aggregate(_lauf_fuer_aggregation(), _config_fuer_aggregation(), manifesto.load_catalog())
+    assert set(agg) == {"ja", "wahl", "stufe", "manifesto", "ohne"}
+    assert agg["ja"] == {"type": "noul", "noul": 0.5, "min": 0.2, "max": 0.6, "n": 2}
+    assert agg["wahl"]["choice"] == "B"
+    assert agg["wahl"]["probabilities"] == {"A": 0.35, "B": 0.65}
+    assert agg["wahl"]["confidence"] == 0.65
+    assert agg["wahl"]["argmax_anteile"] == {"A": 0.5, "B": 0.5}
+    assert agg["wahl"]["n"] == 2
+    assert agg["stufe"]["probabilities"] == {"0": 0.25, "1": 0.0, "2": 0.75}
+    assert agg["stufe"]["stufe"] == 1.5
+    assert agg["stufe"]["wert"] == 4.0
+    assert agg["stufe"]["confidence"] == 0.65
+    assert agg["ohne"] == {"type": "noul", "n": 0}
+
+
+def test_aggregate_manifesto_anteile_und_kennzahlen():
+    agg = scoring.aggregate(_lauf_fuer_aggregation(), _config_fuer_aggregation(), manifesto.load_catalog())
+    m = agg["manifesto"]
+    assert m["type"] == "manifesto"
+    assert m["choice"] == "104 Military: Positive"
+    assert m["anteile"] == {"104": 100.0, "000": 0.0}
+    assert m["domaenen"]["1"] == 100.0 and m["domaenen"]["0"] == 0.0
+    assert m["top"][0] == ("104", "Military: Positive", 100.0)
+    assert m["kennzahlen"] == {"rile": 100.0, "intpeace": 0.0}
+    assert m["confidence"] == 0.75

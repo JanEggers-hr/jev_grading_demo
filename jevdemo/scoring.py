@@ -14,7 +14,7 @@ from dataclasses import dataclass, field
 from jevdemo import manifesto
 from jevdemo.chunking import Einheit, estimate_tokens, shrink
 from jevdemo.config import Config, aktive
-from jevdemo.jev_client import PREIS_JE_M_INPUT, JevFehler, ZuLang, cost_usd
+from jevdemo.jev_client import PREIS_JE_M_INPUT, ZuLang, cost_usd
 
 RESERVE = 200            # Token-Puffer je Aufruf für JSON-Rahmen und Schätzfehler
 WORKERS = 6
@@ -169,3 +169,54 @@ def _bewerte_parallel(lauf: Lauf, questions, client, text_typ, budget, workers, 
             erledigt += 1
             if progress:
                 progress(erledigt, len(jobs))
+
+
+def _gewichtet(gewichte: list[float], werte: list[float]) -> float:
+    return sum(g * w for g, w in zip(gewichte, werte))
+
+
+def aggregate(lauf: Lauf, config: Config, katalog: list[manifesto.Kategorie]) -> dict[str, dict]:
+    """Je aktiver Frage ein Aggregat über alle Einheiten mit Antwort, gewichtet mit einheit.tokens."""
+    out: dict[str, dict] = {}
+    for frage in aktive(config):
+        paare = [(e.einheit.tokens, e.antworten[frage.name]) for e in lauf.einheiten if frage.name in e.antworten]
+        if not paare:
+            out[frage.name] = {"type": frage.type, "n": 0}
+            continue
+        summe = sum(t for t, _ in paare) or 1
+        gewichte = [t / summe for t, _ in paare]
+        antworten = [a for _, a in paare]
+        n = len(antworten)
+        confidence = round(_gewichtet(gewichte, [a.get("confidence", 0.0) for a in antworten]), 4)
+
+        if frage.type == "noul":
+            werte = [a["noul"] for a in antworten]
+            out[frage.name] = {"type": "noul", "noul": round(_gewichtet(gewichte, werte), 4),
+                               "min": min(werte), "max": max(werte), "n": n}
+        elif frage.type == "score":
+            stufen = len(frage.criteria)
+            probs = {str(i): round(_gewichtet(gewichte, [a["probabilities"].get(str(i), 0.0) for a in antworten]), 4)
+                     for i in range(stufen)}
+            stufe = sum(i * probs[str(i)] for i in range(stufen))
+            unten, oben = frage.skala
+            wert = unten + stufe * (oben - unten) / (stufen - 1)
+            out[frage.name] = {"type": "score", "wert": round(wert, 2), "stufe": round(stufe, 3),
+                               "probabilities": probs, "confidence": confidence, "n": n}
+        else:  # choice und manifesto
+            optionen = list(antworten[0]["probabilities"])
+            probs = {o: round(_gewichtet(gewichte, [a["probabilities"].get(o, 0.0) for a in antworten]), 4)
+                     for o in optionen}
+            zaehler = Counter(a["choice"] for a in antworten)
+            ergebnis = {"type": frage.type, "choice": max(probs, key=probs.get), "probabilities": probs,
+                        "confidence": confidence,
+                        "argmax_anteile": {o: round(c / n, 4) for o, c in zaehler.items()}, "n": n}
+            if frage.type == "manifesto":
+                ant = manifesto.anteile(probs)
+                ergebnis.update({
+                    "anteile": ant,
+                    "domaenen": manifesto.domaenen(ant, katalog),
+                    "top": manifesto.top(ant, katalog),
+                    "kennzahlen": manifesto.kennzahlen(ant, frage.kennzahlen or []),
+                })
+            out[frage.name] = ergebnis
+    return out
