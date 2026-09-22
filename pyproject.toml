@@ -1,0 +1,24 @@
+[project]
+name = "jev-grading-demo"
+version = "0.1.0"
+description = "Demo: PDF hochladen, Text mit Jev (TypeSafe System One) bewerten"
+requires-python = ">=3.12"
+dependencies = [
+    "streamlit>=1.57",
+    "pymupdf>=1.25",
+    "pyyaml>=6.0",
+    "plotly>=5.24",
+    "pandas>=2.2",
+]
+
+[dependency-groups]
+dev = ["pytest>=8.3"]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-m 'not live'"
+markers = ["live: ruft die echte OpenRouter-API auf, braucht OPENROUTER_API_KEY"]
