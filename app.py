@@ -105,11 +105,14 @@ def main() -> None:
 
     text_gesamt = "\n\n".join(s.text for s in seiten)
     tokens_gesamt = chunking.estimate_tokens(text_gesamt)
-    modus = st.radio("Modus", ["Gesamttext", "Chunks", "Beide"], horizontal=True)
+    modus = st.radio("Modus", ["Chunks", "Gesamttext", "Beide"], horizontal=True)
     chunk_tokens = st.slider("Chunk-Größe in Token (geschätzt)", 300, 3000,
                              min(3000, max(300, config.chunk_tokens)), 100)
     config.chunk_tokens = chunk_tokens
     chunks = _chunks(seiten, chunk_tokens)
+    seiten_je_chunk = len(seiten) / len(chunks) if chunks else 0.0
+    st.caption(f"Ein Chunk entspricht bei {chunk_tokens} Token etwa "
+               f"{f'{seiten_je_chunk:.1f}'.replace('.', ',')} Seiten dieses PDFs ({len(chunks)} Chunks).")
 
     spalten = st.columns(4)
     spalten[0].metric("Seiten", len(seiten))

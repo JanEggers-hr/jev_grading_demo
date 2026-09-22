@@ -29,6 +29,14 @@ KENNZAHL_HILFE = {
     "intpeace": "Internationaler Frieden: 102 besondere Beziehungen negativ + 105 Militär negativ + 106 Frieden.",
 }
 
+KENNZAHL_KURZ = {
+    "rile": "Rechts-links, -100 links bis +100 rechts",
+    "planeco": "Planwirtschaft",
+    "markeco": "Marktwirtschaft",
+    "welfare": "Wohlfahrt",
+    "intpeace": "Internationaler Frieden",
+}
+
 
 def _rgb(hex_: str) -> tuple[int, int, int]:
     h = hex_.lstrip("#")
@@ -119,6 +127,18 @@ def rile_balken(wert: float) -> go.Figure:
     return fig
 
 
+def kennzahlen_tabelle(kennzahlen: dict[str, float]) -> str:
+    """Kompakte HTML-Tabelle: Kennzahl, Wert, Kurzbezeichnung; Erklärung als Tooltip."""
+    zeilen = "".join(
+        f'<tr title="{html.escape(KENNZAHL_HILFE.get(name, ""))}">'
+        f'<td style="padding:2px 10px 2px 0;font-weight:600">{html.escape(name)}</td>'
+        f'<td style="padding:2px 10px;text-align:right;font-variant-numeric:tabular-nums">{wert:.1f}</td>'
+        f'<td style="padding:2px 0;color:#52514e">{html.escape(KENNZAHL_KURZ.get(name, ""))}</td></tr>'
+        for name, wert in kennzahlen.items()
+    )
+    return f'<table style="font-size:0.85rem;border-collapse:collapse;margin:4px 0 8px 0">{zeilen}</table>'
+
+
 def render_meta(ergebnis: dict) -> None:
     teile = []
     for name, lauf in ergebnis["laeufe"].items():
@@ -166,9 +186,7 @@ def _manifesto_block(frage: cfg.Frage, agg: dict, key: str) -> None:
     st.plotly_chart(fig, width="stretch", key=f"{key}_dom")
     kennzahlen = agg.get("kennzahlen", {})
     if kennzahlen:
-        spalten = st.columns(len(kennzahlen))
-        for spalte, (name, wert) in zip(spalten, kennzahlen.items()):
-            spalte.metric(name, f"{wert:.1f}", help=KENNZAHL_HILFE.get(name, ""))
+        st.markdown(kennzahlen_tabelle(kennzahlen), unsafe_allow_html=True)
         if "rile" in kennzahlen:
             st.plotly_chart(rile_balken(kennzahlen["rile"]), width="stretch", key=f"{key}_rile")
 

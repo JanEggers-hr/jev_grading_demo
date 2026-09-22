@@ -39,3 +39,12 @@ def test_balken_figur():
     fig = views.rile_balken(-12.0)
     assert fig.data[0].marker.color == views.ROT
     assert fig.layout.xaxis.range == (-100, 100)
+
+
+def test_kennzahlen_tabelle():
+    html_text = views.kennzahlen_tabelle({"rile": -44.0, "planeco": 54.0})
+    assert html_text.startswith("<table")
+    assert "rile" in html_text and "-44.0" in html_text and "54.0" in html_text
+    assert "Rechts-links" in html_text and "Planwirtschaft" in html_text
+    assert views.KENNZAHL_HILFE["rile"][:20] in html_text  # Erklärung als Tooltip (title)
+    assert "<script" not in views.kennzahlen_tabelle({"<script>": 1.0})
