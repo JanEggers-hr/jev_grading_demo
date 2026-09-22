@@ -165,6 +165,14 @@ def aktive(config: Config) -> list[Frage]:
     return [f for f in config.fragen if f.aktiv]
 
 
+def durchnummeriert(criteria: list[str] | dict[str, str]) -> list[str] | dict[str, str]:
+    """Jede Zeile mit '1. ', '2. ', ... voranstellen (score: Liste, choice: Mapping-Keys);
+    hilft Jev, die Reihenfolge/Zuordnung der Kriterien eindeutig zu erkennen."""
+    if isinstance(criteria, list):
+        return [f"{i}. {c}" for i, c in enumerate(criteria, start=1)]
+    return {f"{i}. {k}": v for i, (k, v) in enumerate(criteria.items(), start=1)}
+
+
 def to_questions(config: Config, katalog: list[manifesto.Kategorie]) -> dict[str, dict]:
     """Aktive Fragen im Jev-Format, Reihenfolge wie in der Config."""
     out: dict[str, dict] = {}
@@ -174,5 +182,6 @@ def to_questions(config: Config, katalog: list[manifesto.Kategorie]) -> dict[str
         elif f.type == "noul":
             out[f.name] = {"type": "noul", "instructions": f.instructions}
         else:
-            out[f.name] = {"type": f.type, "instructions": f.instructions, "criteria": f.criteria}
+            out[f.name] = {"type": f.type, "instructions": f.instructions,
+                            "criteria": durchnummeriert(f.criteria)}
     return out

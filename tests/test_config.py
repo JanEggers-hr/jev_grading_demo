@@ -94,10 +94,15 @@ def test_to_questions_laesst_inaktive_weg_und_baut_manifesto(katalog):
     fragen = cfg.to_questions(config, katalog)
     assert list(fragen) == ["ja", "stufe", "wahl", "manifesto"]
     assert fragen["ja"] == {"type": "noul", "instructions": "Frage?"}
-    assert fragen["stufe"] == {"type": "score", "instructions": "Frage?", "criteria": ["a", "b"]}
-    assert fragen["wahl"]["criteria"] == {"A": "a", "B": "b"}
+    assert fragen["stufe"] == {"type": "score", "instructions": "Frage?", "criteria": ["1. a", "2. b"]}
+    assert fragen["wahl"]["criteria"] == {"1. A": "a", "2. B": "b"}
     assert fragen["manifesto"]["type"] == "choice"
     assert "000 No meaningful category applies" in fragen["manifesto"]["criteria"]
+
+
+def test_durchnummeriert_liste_und_mapping():
+    assert cfg.durchnummeriert(["a", "b", "c"]) == ["1. a", "2. b", "3. c"]
+    assert cfg.durchnummeriert({"A": "eins", "B": "zwei"}) == {"1. A": "eins", "2. B": "zwei"}
 
 
 def test_from_dict_ohne_fragen_wirft():
@@ -105,3 +110,8 @@ def test_from_dict_ohne_fragen_wirft():
         cfg.from_dict({"model": "x"})
     with pytest.raises(cfg.ConfigError):
         cfg.loads("fragen:\n  a: [1, 2]\n")
+
+
+def test_unbekanntes_feld_wirft_configerror():
+    with pytest.raises(cfg.ConfigError):
+        cfg.loads("fragen:\n  a:\n    type: noul\n    instructions: x\n    unbekannt: 1\n")

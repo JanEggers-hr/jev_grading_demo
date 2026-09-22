@@ -157,7 +157,9 @@ def _noul_block(frage: cfg.Frage, agg: dict) -> None:
 
 
 def _choice_block(frage: cfg.Frage, agg: dict, key: str) -> None:
-    optionen = list(frage.criteria)
+    # frage.criteria ist unnummeriert (Editor-Zustand); Jev bekam die durchnummerierte
+    # Fassung als Optionen und spiegelt sie in choice/probabilities wieder.
+    optionen = list(cfg.durchnummeriert(frage.criteria))
     farbe = optionsfarbe(optionen.index(agg["choice"])) if agg["choice"] in optionen else SONSTIGE
     kachel(frage.instructions, agg["choice"], farbe, f"Confidence {agg['confidence']:.2f} · n = {agg['n']}")
     top5 = sorted(agg["probabilities"].items(), key=lambda kv: -kv[1])[:5]
@@ -170,7 +172,7 @@ def _score_block(frage: cfg.Frage, agg: dict, key: str) -> None:
     unten, oben = frage.skala
     st.markdown(f"**{frage.instructions}**  \n"
                 f"{agg['wert']:.2f} auf der Skala {unten} bis {oben} · Confidence {agg['confidence']:.2f} · n = {agg['n']}")
-    labels = [f"{i}: {kurz(s, 60)}" for i, s in enumerate(frage.criteria)]
+    labels = [f"{i}. {kurz(s, 60)}" for i, s in enumerate(frage.criteria, start=1)]
     werte = [agg["probabilities"].get(str(i), 0.0) * 100 for i in range(len(frage.criteria))]
     st.plotly_chart(balken(labels, werte, BLAU, "Wahrscheinlichkeit je Stufe in %"), width="stretch", key=key)
 
