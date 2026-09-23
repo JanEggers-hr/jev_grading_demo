@@ -79,7 +79,7 @@ Vorschlag laut ADR-001: Tier-4-Maßnahmen gelten nur für `jevdemo/auth.py`, der
 | T2 Property-Based Tests | ⏳ Ausstehend | Keine Hypothesis |
 | T2 SonarQube Quality Gate | ⏳ Ausstehend | Nicht eingerichtet |
 | T2 Sampling Review (~20%) | ⏳ Ausstehend | Solo-Projekt, direkter Push auf `main` |
-| T3 Mandatory Human Review | ⏳ Ausstehend | `main` ungeschützt (GitHub API: "Branch not protected") |
+| T3 Mandatory Human Review | ⏳ Ausstehend | Teilweise: Branch-Protection auf `main` seit 2026-09-23 (CI-Check `pruefen` Pflicht, kein Force-Push, kein Löschen). Admins dürfen direkt pushen, also kein Pflicht-Review |
 | T3 Sandbox / Isolation | ⏳ Ausstehend | Teilweise: uid 1000; `compose.yaml` setzt `mem_limit: 2g`, `pids_limit`, `cap_drop: ALL`, `no-new-privileges` (lokal geprüft, auf dem Server noch nicht ausgerollt). Fehlt: eigenes Netz statt Tracker-Netz |
 | T3 Fuzzing | ⏳ Ausstehend | Relevant für PDF-Upload (MuPDF in C parst fremde Dateien) |
 | T3 Penetration Testing | ⏳ Ausstehend | Gate hat seit 2026-09-23 eine Brute-Force-Bremse (10 Fehlversuche / 10 min, prozessweit) |
