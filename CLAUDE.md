@@ -25,12 +25,11 @@ Erstelle eine Demo-Seite, über die man per Drag&Drop ein PDF hochladen kann. Da
 - streamlit oder leichtgewichtige Alternative
 - Docker/Podman Container für Deployment auf Debian-Server
 
-
 ## Deployment
 
 - Zielserver ist der "Weihnachtswunderserver" unter 34.159.146.213
 - Du hast Zugang über jeggers@34.159.146.213
-- Info über den Server in /var/opt/README.md auf dem Zielserver
+- Info über den Server in /var/opt/README.md auf dem Zielserver - aktuell halten
 - Server ist von außen zu erreichen unter  
 
 ## Rules of engagement

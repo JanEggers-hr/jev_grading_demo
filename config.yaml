@@ -4,32 +4,13 @@ chunk_tokens: 800
 budget_tokens: 26000
 
 fragen:
-  manifesto:
-    type: manifesto
-    instructions: >-
-      Which category best describes the main political position or goal expressed in the text?
-      The category descriptions come from the Manifesto Project coding scheme, written for party
-      manifestos. Read 'the manifesto country' as the country the text is about and 'the manifesto
-      party' as the author of the text.
-    domains: ["1", "2", "3", "4", "5", "6", "7"]
-    kennzahlen: [rile, planeco, markeco, welfare, intpeace]
+  regionalbezug:
+    type: noul
+    instructions: Bezieht sich der Text erkennbar auf Nordrhein-Westfalen?
 
-  konkretheit:
+  polemik:
     type: score
-    skala: [1, 5]
-    instructions: >-
-      Wie konkret sind die politischen Forderungen und Vorhaben des Textes? Bewerte nicht das
-      Thema und nicht die Position, sondern den Grad der Konkretisierung.
-    criteria:
-      - Reine Absichtserklärungen und Werte, keine benennbaren Maßnahmen
-      - Allgemeine Ziele, Maßnahmen nur angedeutet
-      - Benannte Maßnahmen ohne Zahlen, Fristen oder Zuständigkeiten
-      - Maßnahmen mit einzelnen Zahlen oder Fristen
-      - Maßnahmen mit Zahlen, Fristen, Zuständigkeiten und Finanzierung
-
-  tonalitaet:
-    type: score
-    skala: [0, 1]
+    skala: [0, 100]
     instructions: >-
       Wie polarisierend ist die Sprache des Textes? Bewerte den Ton, nicht die Position.
     criteria:
@@ -48,10 +29,22 @@ fragen:
       Pressemitteilung: Kurze Mitteilung an Medien zu einem Anlass oder einer Position
       Sonstiges: Keine der genannten Textsorten
 
-  regionalbezug:
-    type: noul
-    instructions: Bezieht sich der Text erkennbar auf ein bestimmtes Bundesland, eine Region oder eine Kommune?
+  manifesto:
+    type: manifesto
+    instructions: >-
+      Which category best describes the main political position or goal expressed in the text?
+      The category descriptions come from the Manifesto Project coding scheme, written for party
+      manifestos. Read 'the manifesto country' as the country the text is about and 'the manifesto
+      party' as the author of the text.
+    domains: ["1", "2", "3", "4", "5", "6", "7"]
+    kennzahlen: [rile, planeco, markeco, welfare, intpeace]
 
-  finanzierung:
-    type: noul
-    instructions: Nennt der Text konkrete Angaben dazu, wie seine Vorhaben finanziert werden sollen?
+  textsorte:
+    type: choice
+    instructions: Um welche Textsorte handelt es sich?
+    criteria:
+      Wahlprogramm: Programm einer Partei oder Liste zu einer Wahl, mit Forderungen über mehrere Politikfelder
+      Koalitionsvertrag: Vereinbarung mehrerer Parteien über ein gemeinsames Regierungsprogramm
+      Rede: Manuskript oder Mitschrift einer Rede oder Ansprache
+      Pressemitteilung: Kurze Mitteilung an Medien zu einem Anlass oder einer Position
+      Sonstiges: Keine der genannten Textsorten
