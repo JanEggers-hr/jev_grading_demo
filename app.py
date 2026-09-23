@@ -1,13 +1,13 @@
 """Jev Grading Demo: PDF hochladen, Fragen anpassen, mit Jev bewerten lassen."""
 
 import hashlib
-import hmac
 import os
 from pathlib import Path
 
 import streamlit as st
 
-from jevdemo import chunking, config as cfg, manifesto, pdf_text, results, scoring
+from jevdemo import auth, chunking, manifesto, pdf_text, results, scoring
+from jevdemo import config as cfg
 from jevdemo.env import lade_env
 from jevdemo.jev_client import JevClient
 from jevdemo.ui.editor import render_editor
@@ -19,26 +19,8 @@ lade_env(ROOT / ".env")
 st.set_page_config(page_title="Jev Grading Demo", page_icon="📄", layout="wide")
 
 
-def _gate() -> None:
-    """Passwort-Gate; hält die Seite an, bis das Passwort stimmt."""
-    passwort = os.environ.get("APP_PASSWORD", "")
-    fehlend = [n for n in ("APP_PASSWORD", "OPENROUTER_API_KEY") if not os.environ.get(n)]
-    if fehlend:
-        st.error(f"Umgebungsvariable fehlt: {', '.join(fehlend)}. Siehe .env.example.")
-        st.stop()
-    if st.session_state.get("authed"):
-        return
-    st.title("Jev Grading Demo")
-    eingabe = st.text_input("Passwort", type="password")
-    if eingabe and hmac.compare_digest(eingabe.encode(), passwort.encode()):
-        st.session_state["authed"] = True
-        st.rerun()
-    if eingabe:
-        st.error("Falsches Passwort")
-    st.stop()
-
-
-@st.cache_data(show_spinner="PDF wird gelesen …")
+# Caches begrenzt: PDF-Texte liegen sessionübergreifend im RAM, der Host hat keinen Swap (ADR-001)
+@st.cache_data(show_spinner="PDF wird gelesen …", max_entries=16, ttl=3600)
 def _seiten(data: bytes) -> list[pdf_text.Seite]:
     return pdf_text.extract_pages(data)
 
@@ -48,12 +30,12 @@ def _katalog() -> list[manifesto.Kategorie]:
     return manifesto.load_catalog()
 
 
-@st.cache_data(show_spinner=False)
+@st.cache_data(show_spinner=False, max_entries=64, ttl=3600)
 def _chunks(seiten: list[pdf_text.Seite], chunk_tokens: int) -> list[chunking.Einheit]:
     return chunking.chunk_pages(seiten, chunk_tokens)
 
 
-@st.cache_data(show_spinner=False)
+@st.cache_data(show_spinner=False, max_entries=64, ttl=3600)
 def _gesamttext(seiten: list[pdf_text.Seite], max_tokens: int) -> tuple[chunking.Einheit, float]:
     return chunking.whole_text(seiten, max_tokens)
 
@@ -70,7 +52,7 @@ def _plan(seiten, chunks: list[chunking.Einheit], modus: str, questions: dict, b
 
 
 def main() -> None:
-    _gate()
+    auth.gate()
     katalog = _katalog()
     if "config" not in st.session_state:
         try:
@@ -169,8 +151,8 @@ def main() -> None:
     ergebnis = st.session_state.get("ergebnis")
     if not ergebnis:
         st.stop()
-    if all(l["aufrufe"] == 0 for l in ergebnis["laeufe"].values()):
-        erste = next((f for l in ergebnis["laeufe"].values() for f in l["fehler"]), "unbekannt")
+    if all(eintrag["aufrufe"] == 0 for eintrag in ergebnis["laeufe"].values()):
+        erste = next((f for eintrag in ergebnis["laeufe"].values() for f in eintrag["fehler"]), "unbekannt")
         st.error(f"Kein Aufruf erfolgreich. Erste Ursache: {erste}")
         st.stop()
     render_meta(ergebnis)

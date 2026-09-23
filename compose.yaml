@@ -5,6 +5,13 @@ services:
     container_name: jev_grading_demo
     env_file: .env
     restart: unless-stopped
+    # Härtung (ADR-001): der Host hat keinen Swap und betreibt nebenan die Produktions-App
+    mem_limit: 2g
+    pids_limit: 256
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
     networks:
       - caddy
 
