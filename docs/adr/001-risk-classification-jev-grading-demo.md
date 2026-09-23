@@ -113,8 +113,8 @@ Erledigt, Status des ADR bleibt *Proposed*:
 - Tests: `tests/test_auth.py` (Bremse, Vergleich) und `tests/test_gate.py` (AppTest gegen die echte App).
 - Caches: `max_entries` und `ttl=3600` an allen drei `st.cache_data`-Funktionen.
 - `compose.yaml`: `mem_limit: 2g`, `pids_limit: 256`, `cap_drop: ALL`, `no-new-privileges`. Lokal mit Podman
-  geprüft; auf dem Server noch nicht ausgerollt.
+  geprüft, am 2026-09-23 auf dem Server ausgerollt und per `docker inspect` bestätigt.
 - Ruff-Lint, pytest und pip-audit in GitHub Actions. pip-audit fand keine bekannten Schwachstellen.
 
-Offen: Ausrollen auf den Server, eigenes Docker-Netz, Type Checker, Pre-Commit, SAST, menschliches Review von
+Offen: eigenes Docker-Netz, Type Checker, Pre-Commit, SAST, menschliches Review von
 `jevdemo/auth.py`.
