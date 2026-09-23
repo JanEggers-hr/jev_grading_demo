@@ -84,7 +84,8 @@ def _frage_block(frage: cfg.Frage) -> None:
     frage.aktiv = st.toggle("Aktiv", value=frage.aktiv, key=_key(name, "aktiv"))
     st.selectbox("Typ", TYPEN, index=TYPEN.index(frage.type), key=_key(name, "type"),
                  on_change=_typ_geaendert, args=(name,))
-    frage.instructions = st.text_area("Instruction", value=frage.instructions, key=_key(name, "instructions"), height=100)
+    frage.instructions = st.text_area("Instruction", value=frage.instructions, key=_key(name, "instructions"),
+                                      height=100)
     if frage.type == "score":
         stufen_alt = frage.criteria if isinstance(frage.criteria, list) else []
         stufen = st.text_area("Stufen, eine je Zeile, von niedrig nach hoch",
@@ -108,7 +109,7 @@ def _frage_block(frage: cfg.Frage) -> None:
                                     width="stretch", hide_index=True)
         frage.criteria = {
             str(o).strip(): ("" if pd.isna(b) else str(b).strip())
-            for o, b in zip(bearbeitet["Option"], bearbeitet["Beschreibung"])
+            for o, b in zip(bearbeitet["Option"], bearbeitet["Beschreibung"], strict=True)
             if not pd.isna(o) and str(o).strip()
         }
     st.button("Frage löschen", key=_key(name, "loeschen"), on_click=_loeschen, args=(name,))
@@ -117,7 +118,8 @@ def _frage_block(frage: cfg.Frage) -> None:
 def _manifesto_block(frage: cfg.Frage, katalog: list[manifesto.Kategorie]) -> None:
     name = frage.name
     frage.aktiv = st.toggle("Aktiv", value=frage.aktiv, key=_key(name, "aktiv"))
-    frage.instructions = st.text_area("Instruction", value=frage.instructions, key=_key(name, "instructions"), height=140)
+    frage.instructions = st.text_area("Instruction", value=frage.instructions, key=_key(name, "instructions"),
+                                      height=140)
     vorauswahl = [o for o in DOMAENEN_OPTIONEN if o.split()[0] in (frage.domains or [])]
     auswahl = st.multiselect("Domänen", DOMAENEN_OPTIONEN, default=vorauswahl, key=_key(name, "domains"))
     frage.domains = [o.split()[0] for o in auswahl]

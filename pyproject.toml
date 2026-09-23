@@ -22,3 +22,11 @@ testpaths = ["tests"]
 pythonpath = ["."]
 addopts = "-m 'not live'"
 markers = ["live: ruft die echte OpenRouter-API auf, braucht OPENROUTER_API_KEY"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+# pycodestyle, Pyflakes, Import-Sortierung, Bugbear, pyupgrade
+select = ["E", "F", "W", "I", "B", "UP"]

@@ -49,7 +49,7 @@ def _hex(rgb) -> str:
 
 def mische(a: str, b: str, t: float) -> str:
     """Linear zwischen zwei Hex-Farben, t = 0 → a, t = 1 → b."""
-    return _hex(x + (y - x) * t for x, y in zip(_rgb(a), _rgb(b)))
+    return _hex(x + (y - x) * t for x, y in zip(_rgb(a), _rgb(b), strict=True))
 
 
 def noul_farbe(wert: float) -> str:
@@ -148,7 +148,8 @@ def render_meta(ergebnis: dict) -> None:
         if lauf["fehler"]:
             text += f", {len(lauf['fehler'])} Fehler"
         teile.append(text)
-    modell = next((l["modell"] for l in ergebnis["laeufe"].values() if l.get("modell")), ergebnis["meta"]["modell"])
+    modell = next((eintrag["modell"] for eintrag in ergebnis["laeufe"].values() if eintrag.get("modell")),
+                  ergebnis["meta"]["modell"])
     st.caption(f"Modell {modell} · " + " · ".join(teile))
 
 
@@ -171,7 +172,8 @@ def _choice_block(frage: cfg.Frage, agg: dict, key: str) -> None:
 def _score_block(frage: cfg.Frage, agg: dict, key: str) -> None:
     unten, oben = frage.skala
     st.markdown(f"**{frage.instructions}**  \n"
-                f"{agg['wert']:.2f} auf der Skala {unten} bis {oben} · Confidence {agg['confidence']:.2f} · n = {agg['n']}")
+                f"{agg['wert']:.2f} auf der Skala {unten} bis {oben} · "
+                f"Confidence {agg['confidence']:.2f} · n = {agg['n']}")
     labels = [f"{i}. {kurz(s, 60)}" for i, s in enumerate(frage.criteria, start=1)]
     werte = [agg["probabilities"].get(str(i), 0.0) * 100 for i in range(len(frage.criteria))]
     st.plotly_chart(balken(labels, werte, BLAU, "Wahrscheinlichkeit je Stufe in %"), width="stretch", key=key)
@@ -217,7 +219,7 @@ def _chunk_tabelle(lauf: dict, config: cfg.Config) -> None:
 def render_results(ergebnis: dict, config: cfg.Config) -> None:
     laeufe = ergebnis["laeufe"]
     spalten = st.columns(len(laeufe))
-    for spalte, (name, lauf) in zip(spalten, laeufe.items()):
+    for spalte, (name, lauf) in zip(spalten, laeufe.items(), strict=True):
         with spalte:
             st.subheader(MODUS_TITEL.get(name, name))
             if lauf["fehler"]:

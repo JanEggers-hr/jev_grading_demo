@@ -116,7 +116,11 @@ def run(units: list[Einheit], questions: dict[str, dict], client, *, text_typ: s
 
 
 def _bewerte_kuerzbar(lauf: Lauf, questions, client, text_typ, budget, progress) -> None:
-    """Gesamttext: Gruppen nacheinander. Bei ZuLang kürzen und alle Gruppen neu, damit jede Antwort denselben Text meint. Beliebige Fehler werden gesammelt."""
+    """Gesamttext: Gruppen nacheinander.
+
+    Bei ZuLang kürzen und alle Gruppen neu, damit jede Antwort denselben Text meint.
+    Beliebige Fehler werden gesammelt.
+    """
     erg = lauf.einheiten[0]
     anteil_start, laenge_start = lauf.anteil_bewertet, len(erg.einheit.text)
     for kuerzung in range(MAX_KUERZUNGEN + 1):
@@ -175,7 +179,7 @@ def _bewerte_parallel(lauf: Lauf, questions, client, text_typ, budget, workers, 
 
 
 def _gewichtet(gewichte: list[float], werte: list[float]) -> float:
-    return sum(g * w for g, w in zip(gewichte, werte))
+    return sum(g * w for g, w in zip(gewichte, werte, strict=True))
 
 
 def aggregate(lauf: Lauf, config: Config, katalog: list[manifesto.Kategorie]) -> dict[str, dict]:

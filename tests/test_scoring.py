@@ -2,9 +2,11 @@ import threading
 
 import pytest
 
-from jevdemo import scoring
+from jevdemo import config as cfg
+from jevdemo import manifesto, scoring
 from jevdemo.chunking import Einheit, estimate_tokens
 from jevdemo.jev_client import JevFehler, ZuLang
+from jevdemo.scoring import EinheitErgebnis, Lauf
 
 FRAGEN = {
     "ja": {"type": "noul", "instructions": "?"},
@@ -148,10 +150,6 @@ def test_run_kuerzbar_sammelt_beliebige_fehler():
     assert len(lauf.fehler) == 1 and "kaputte Antwort" in lauf.fehler[0]
     assert lauf.einheiten[0].fehler == ["kaputte Antwort"]
 
-
-from jevdemo import config as cfg
-from jevdemo import manifesto
-from jevdemo.scoring import EinheitErgebnis, Lauf
 
 
 def _lauf_fuer_aggregation() -> Lauf:

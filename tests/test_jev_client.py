@@ -92,7 +92,8 @@ def test_retry_bei_netzfehler(monkeypatch):
 
 
 def test_zu_lang(monkeypatch):
-    _folge(monkeypatch, [_http_error(400, '{"error":{"message":"HTTP 400: {\\"detail\\":{\\"error_type\\":\\"max_tokens_exceeded\\"}}"}')])
+    detail = '{"error":{"message":"HTTP 400: {\\"detail\\":{\\"error_type\\":\\"max_tokens_exceeded\\"}}"}'
+    _folge(monkeypatch, [_http_error(400, detail)])
     client, schlaf = _client()
     with pytest.raises(ZuLang) as e:
         client.decide("s", {})

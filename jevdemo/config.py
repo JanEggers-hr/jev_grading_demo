@@ -147,7 +147,8 @@ def validate(config: Config) -> list[str]:
         elif f.type == "choice":
             if not (isinstance(f.criteria, dict) and len(f.criteria) >= 2
                     and all(isinstance(k, str) and k.strip() for k in f.criteria)):
-                fehler.append(p + "choice braucht criteria als Mapping Option -> Beschreibung mit mindestens 2 Optionen")
+                fehler.append(p + "choice braucht criteria als Mapping Option -> Beschreibung "
+                                  "mit mindestens 2 Optionen")
             if f.skala is not None:
                 fehler.append(p + "choice hat keine skala")
         elif f.type == "noul":
