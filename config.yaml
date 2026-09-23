@@ -38,13 +38,3 @@ fragen:
       party' as the author of the text.
     domains: ["1", "2", "3", "4", "5", "6", "7"]
     kennzahlen: [rile, planeco, markeco, welfare, intpeace]
-
-  textsorte:
-    type: choice
-    instructions: Um welche Textsorte handelt es sich?
-    criteria:
-      Wahlprogramm: Programm einer Partei oder Liste zu einer Wahl, mit Forderungen über mehrere Politikfelder
-      Koalitionsvertrag: Vereinbarung mehrerer Parteien über ein gemeinsames Regierungsprogramm
-      Rede: Manuskript oder Mitschrift einer Rede oder Ansprache
-      Pressemitteilung: Kurze Mitteilung an Medien zu einem Anlass oder einer Position
-      Sonstiges: Keine der genannten Textsorten
